@@ -45,7 +45,7 @@
     const postContent = document.getElementById('post-content');
     const listContainer = document.getElementById('list-container');
 
-    // 1. Luôn load danh sách bài viết
+    // 1. Luôn load danh sách bài viết (hiện ở dưới)
     postList.classList.remove('hidden');
     fetch('./posts.json')
         .then(res => res.json())
@@ -53,20 +53,26 @@
             listContainer.innerHTML = posts.map(post => `
                 <li>
                     <a href="?post=${post.slug}">${post.title}</a>
-                    <p style="color: #666; font-size: 0.9rem; margin: 0;">Xem chi tiết thông báo này...</p>
+                    <p style="color: #888; font-size: 0.85rem; margin: 0;">Xem chi tiết...</p>
                 </li>
             `).join('');
         });
 
-    // 2. Nếu có post, hiển thị nội dung ngay dưới list
+    // 2. Nếu người dùng đang xem một bài viết cụ thể
     if (postName) {
         postContent.classList.remove('hidden');
         fetch(`./content/${postName}.md`)
-            .then(res => res.text())
+            .then(res => {
+                if(!res.ok) throw new Error();
+                return res.text();
+            })
             .then(md => {
-                // Thêm một đường kẻ phân cách giữa List và Content
-                postContent.innerHTML = "<hr style='margin: 3rem 0; border: 1px dashed #eee;'>" + marked.parse(md);
-                postContent.scrollIntoView({ behavior: 'smooth' });
+                postContent.innerHTML = marked.parse(md);
+                // Cuộn lên đầu trang để đọc bài
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            })
+            .catch(() => {
+                postContent.innerHTML = "<h2>404</h2><p>Không tìm thấy bài viết này.</p>";
             });
     }
 </script>
