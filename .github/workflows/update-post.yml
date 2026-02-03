@@ -6,22 +6,34 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Thêm đoạn permissions này để cấp quyền ghi
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Lấy toàn bộ lịch sử để push không lỗi
+          
       - name: Generate posts.json
         run: |
           echo "[" > posts.json
-          for file in $(ls content/*.md -1t); do
-            filename=$(basename "$file" .md)
-            title=$(head -n 1 "$file" | sed 's/# //')
-            echo "  {\"title\": \"$title\", \"slug\": \"$filename\"}," >> posts.json
+          # Duyệt qua các file md trong thư mục content
+          for file in content/*.md; do
+            if [ -f "$file" ]; then
+              filename=$(basename "$file" .md)
+              # Lấy dòng đầu tiên làm tiêu đề, xóa ký tự #
+              title=$(head -n 1 "$file" | sed 's/# //')
+              echo "  {\"title\": \"$title\", \"slug\": \"$filename\"}," >> posts.json
+            fi
           done
+          # Xóa dấu phẩy thừa ở dòng cuối cùng của JSON
           sed -i '$ s/,$//' posts.json
           echo "]" >> posts.json
+
       - name: Commit and Push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add posts.json
-          git commit -m "Bot: Cập nhật danh sách bài viết" || exit 0
-          git push
+          git commit -m "Bot: Cập nhật danh sách bài viết [skip ci]" || exit 0
+          git push origin main
