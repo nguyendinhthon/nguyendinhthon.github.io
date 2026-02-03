@@ -23,16 +23,16 @@
     </div>
 </header>
 
-    <main id="main-content">
+       <main>
+    <div id="content-wrapper">
         <div id="post-list" class="hidden">
-            <h2 class="section-title">Bài viết mới nhất</h2>
-            <ul id="list-container">
-                <li class="loading">Đang tải danh sách bài viết...</li>
-            </ul>
+            <h2 class="section-title">News</h2>
+            <ul id="list-container"></ul>
         </div>
 
         <article id="post-content" class="hidden post-detail"></article>
-    </main>
+    </div>
+</main>
 
     <footer>
         <p>Pixel Arco</p>
@@ -45,7 +45,7 @@
     const postContent = document.getElementById('post-content');
     const listContainer = document.getElementById('list-container');
 
-    // Luôn luôn hiển thị danh sách bài viết ở trên
+    // 1. Luôn load danh sách bài viết
     postList.classList.remove('hidden');
     fetch('./posts.json')
         .then(res => res.json())
@@ -53,19 +53,19 @@
             listContainer.innerHTML = posts.map(post => `
                 <li>
                     <a href="?post=${post.slug}">${post.title}</a>
+                    <p style="color: #666; font-size: 0.9rem; margin: 0;">Xem chi tiết thông báo này...</p>
                 </li>
             `).join('');
         });
 
-    // Nếu có bài viết cụ thể, hiển thị nó NGAY PHÍA DƯỚI
+    // 2. Nếu có post, hiển thị nội dung ngay dưới list
     if (postName) {
         postContent.classList.remove('hidden');
-        postContent.classList.add('post-detail'); // Thêm class để tạo khoảng cách nhẹ
         fetch(`./content/${postName}.md`)
             .then(res => res.text())
             .then(md => {
-                postContent.innerHTML = marked.parse(md);
-                // Cuộn xuống bài viết để người dùng biết nội dung đã load
+                // Thêm một đường kẻ phân cách giữa List và Content
+                postContent.innerHTML = "<hr style='margin: 3rem 0; border: 1px dashed #eee;'>" + marked.parse(md);
                 postContent.scrollIntoView({ behavior: 'smooth' });
             });
     }
