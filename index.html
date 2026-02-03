@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Arco Blog</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="https://via.placeholder.com/40" alt="Logo">
+            </div>
+            <nav>
+                <a href="index.html">Homepage</a>
+                <a href="https://github.com/your-username" target="_blank">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <div id="post-list" class="hidden">
+            <h2 class="section-title">Bài viết mới nhất</h2>
+            <ul id="list-container">
+                <li class="loading">Đang tải danh sách bài viết...</li>
+            </ul>
+        </div>
+
+        <article id="post-content" class="hidden post-detail"></article>
+    </main>
+
+    <footer>
+        <p>Pixel Arco</p>
+    </footer>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const postName = urlParams.get('post');
+        const postList = document.getElementById('post-list');
+        const postContent = document.getElementById('post-content');
+        const listContainer = document.getElementById('list-container');
+
+        if (postName) {
+            // HIỂN THỊ BÀI VIẾT CHI TIẾT
+            postContent.classList.remove('hidden');
+            fetch(`./content/${postName}.md`)
+                .then(res => {
+                    if(!res.ok) throw new Error();
+                    return res.text();
+                })
+                .then(md => {
+                    postContent.innerHTML = marked.parse(md);
+                })
+                .catch(() => {
+                    postContent.innerHTML = "<h2>404</h2><p>Không tìm thấy bài viết này.</p>";
+                });
+        } else {
+            // HIỂN THỊ TRANG CHỦ
+            postList.classList.remove('hidden');
+            fetch('./posts.json')
+                .then(res => res.json())
+                .then(posts => {
+                    if (posts.length === 0) {
+                        listContainer.innerHTML = "<li>Chưa có bài viết nào.</li>";
+                        return;
+                    }
+                    listContainer.innerHTML = posts.map(post => `
+                        <li>
+                            <a href="?post=${post.slug}">${post.title}</a>
+                        </li>
+                    `).join('');
+                })
+                .catch(() => {
+                    listContainer.innerHTML = "<li>Lỗi khi tải danh sách bài viết.</li>";
+                });
+        }
+    </script>
+</body>
+</html>
