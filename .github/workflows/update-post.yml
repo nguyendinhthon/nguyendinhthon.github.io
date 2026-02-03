@@ -1,0 +1,27 @@
+name: Update Post List
+on:
+  push:
+    paths:
+      - 'content/*.md'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Generate posts.json
+        run: |
+          echo "[" > posts.json
+          for file in $(ls content/*.md -1t); do
+            filename=$(basename "$file" .md)
+            title=$(head -n 1 "$file" | sed 's/# //')
+            echo "  {\"title\": \"$title\", \"slug\": \"$filename\"}," >> posts.json
+          done
+          sed -i '$ s/,$//' posts.json
+          echo "]" >> posts.json
+      - name: Commit and Push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add posts.json
+          git commit -m "Bot: Cập nhật danh sách bài viết" || exit 0
+          git push
