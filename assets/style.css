@@ -93,11 +93,24 @@ main {
 #list-container a:hover { color: var(--purple-light); }
 
 /* Nội dung bài viết chi tiết */
+/* Đường kẻ phân cách khi bài viết nằm trên list */
 .post-detail {
-    line-height: 1.8;
-    font-size: 1.05rem;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px dashed #edf2f7;
 }
-.post-detail h1, .post-detail h2 { color: var(--purple-dark); }
+
+/* Đảm bảo danh sách phía dưới không bị quá dính vào bài viết */
+#post-list {
+    margin-top: 1rem;
+}
+
+.section-title {
+    font-size: 1.2rem; /* Nhỏ hơn một chút vì giờ nó đóng vai trò "Tin liên quan" */
+    color: var(--purple-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
 /* Footer nhỏ gọn */
 footer {
