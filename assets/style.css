@@ -1,10 +1,13 @@
 :root {
-    --header-bg: #1a1c23; /* Màu tối của header */
-    --body-bg: #f4f5f7;   /* Màu nền nhạt */
+    /* Màu tím đậm cho Header và Footer */
+    --header-bg: #2d1b4d; 
+    /* Màu tím sáng hơn một chút khi hover */
+    --header-hover: #442b7a;
+    
+    --body-bg: #f4f5f7;
     --card-bg: #ffffff;
     --text-main: #333333;
-    --text-muted: #666666;
-    --accent: #4c51bf;
+    --accent: #6b46c1; /* Màu tím nhấn cho các đường link */
 }
 
 body {
@@ -18,7 +21,9 @@ body {
 header {
     background: var(--header-bg);
     color: white;
-    padding: 0.75rem 0;
+    padding: 1rem 0;
+    /* Tạo một đường kẻ mỏng ở dưới cho chuyên nghiệp */
+    border-bottom: 2px solid var(--header-hover);
 }
 
 .header-container {
@@ -30,6 +35,18 @@ header {
     padding: 0 2rem;
 }
 
+nav a {
+    color: #e9d8fd; /* Màu tím nhạt cho text trên nền đậm */
+    text-decoration: none;
+    margin-left: 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+nav a:hover {
+    color: white;
+}
+
 .logo {
     display: flex;
     align-items: center;
@@ -38,15 +55,6 @@ header {
     font-weight: bold;
 }
 
-nav a {
-    color: #cbd5e0;
-    text-decoration: none;
-    margin-left: 1.5rem;
-    font-size: 0.9rem;
-    transition: color 0.2s;
-}
-
-nav a:hover { color: white; }
 
 /* Main Content dạng Card trắng */
 main {
@@ -93,9 +101,9 @@ h2.section-title {
 /* Footer tối giản */
 footer {
     text-align: center;
-    padding: 1.5rem;
+    padding: 2rem;
     background: var(--header-bg);
-    color: #a0aec0;
+    color: #b794f4;
     font-size: 0.85rem;
-    margin-top: auto;
+    margin-top: 40px;
 }
