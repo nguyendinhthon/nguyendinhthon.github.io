@@ -1,53 +1,101 @@
 :root {
-    --primary-color: #333;
-    --link-color: #0070f3;
+    --header-bg: #1a1c23; /* Màu tối của header */
+    --body-bg: #f4f5f7;   /* Màu nền nhạt */
+    --card-bg: #ffffff;
+    --text-main: #333333;
+    --text-muted: #666666;
+    --accent: #4c51bf;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    margin: 0; padding: 0; line-height: 1.6; color: var(--primary-color);
-    display: flex; flex-direction: column; min-height: 100vh;
+    background-color: var(--body-bg);
+    margin: 0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text-main);
 }
 
-/* Header đúng yêu cầu: Ảnh trái - Link phải */
+/* Header sát mép, màu tối */
 header {
-    border-bottom: 1px solid #eaeaea;
-    padding: 15px 0;
+    background: var(--header-bg);
+    color: white;
+    padding: 0.75rem 0;
 }
 
 .header-container {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 2rem;
 }
 
-.logo img { height: 40px; border-radius: 8px; }
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
 
 nav a {
-    margin-left: 20px;
+    color: #cbd5e0;
     text-decoration: none;
-    color: #666;
-    font-weight: 500;
+    margin-left: 1.5rem;
+    font-size: 0.9rem;
+    transition: color 0.2s;
 }
 
-nav a:hover { color: #000; }
+nav a:hover { color: white; }
 
-/* Main Content */
-main { flex: 1; max-width: 800px; margin: 40px auto; padding: 0 20px; width: 100%; box-sizing: border-box; }
+/* Main Content dạng Card trắng */
+main {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
 
-.hidden { display: none; }
-.section-title { font-size: 1.5rem; margin-bottom: 20px; border-left: 4px solid #000; padding-left: 15px; }
+#post-list, #post-content {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border: 1px solid #e2e8f0;
+}
+
+/* Định dạng các mục News/Bài viết giống mẫu */
+h2.section-title {
+    color: var(--text-main);
+    border-bottom: 2px solid #edf2f7;
+    padding-bottom: 1rem;
+    margin-top: 0;
+}
 
 #list-container { list-style: none; padding: 0; }
-#list-container li { padding: 10px 0; border-bottom: 1px dashed #eee; }
-#list-container a { font-size: 1.1rem; color: var(--link-color); text-decoration: none; }
-#list-container a:hover { text-decoration: underline; }
 
-/* Footer */
-footer { text-align: center; padding: 30px; background: #fafafa; color: #999; font-size: 0.9rem; margin-top: 50px; }
+#list-container li {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #edf2f7;
+}
 
-/* Post Detail Markdown Styling */
-.post-detail img { max-width: 100%; border-radius: 8px; }
+/* Style cho tiêu đề bài viết trong danh sách */
+#list-container a {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #2d3748;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+#list-container a:hover { color: var(--accent); }
+
+/* Footer tối giản */
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--header-bg);
+    color: #a0aec0;
+    font-size: 0.85rem;
+    margin-top: auto;
+}
