@@ -1,109 +1,94 @@
 :root {
-    /* Màu tím đậm cho Header và Footer */
-    --header-bg: #2d1b4d; 
-    /* Màu tím sáng hơn một chút khi hover */
-    --header-hover: #442b7a;
-    
-    --body-bg: #f4f5f7;
-    --card-bg: #ffffff;
-    --text-main: #333333;
-    --accent: #6b46c1; /* Màu tím nhấn cho các đường link */
+    --purple-dark: #2d1b4d;
+    --purple-light: #b794f4;
+    --bg-color: #f4f5f7;
+    --text-color: #333;
 }
 
 body {
-    background-color: var(--body-bg);
+    background-color: var(--bg-color);
     margin: 0;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-/* Header sát mép, màu tối */
+/* Header nhỏ hơn còn 2/3 (giảm padding) */
 header {
-    background: var(--header-bg);
+    background: var(--purple-dark);
     color: white;
-    padding: 1rem 0;
-    /* Tạo một đường kẻ mỏng ở dưới cho chuyên nghiệp */
-    border-bottom: 2px solid var(--header-hover);
+    padding: 0.4rem 0; /* Thu nhỏ chiều cao */
 }
 
 .header-container {
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 2rem;
+    padding: 0 1.5rem;
 }
+
+.logo { display: flex; align-items: center; gap: 8px; font-weight: bold; }
+.logo img { height: 28px; } /* Logo nhỏ hơn */
 
 nav a {
-    color: #e9d8fd; /* Màu tím nhạt cho text trên nền đậm */
+    color: #e9d8fd;
     text-decoration: none;
-    margin-left: 1.5rem;
-    font-size: 0.95rem;
-    font-weight: 500;
+    margin-left: 1.2rem;
+    font-size: 0.85rem;
 }
 
-nav a:hover {
-    color: white;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1.25rem;
-    font-weight: bold;
-}
-
-
-/* Main Content dạng Card trắng */
+/* Main: Loại bỏ hiệu ứng nổi (shadow/border/card) */
 main {
     max-width: 1000px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+    margin: 0 auto;
+    padding: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+    background: white; /* Giữ nền trắng nhưng không đổ bóng */
+    flex: 1;
 }
 
+/* Phần danh sách và nội dung nối liền nhau */
 #post-list, #post-content {
-    background: var(--card-bg);
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    border: 1px solid #e2e8f0;
+    background: transparent;
+    padding: 0;
+    border: none;
+    box-shadow: none;
 }
 
-/* Định dạng các mục News/Bài viết giống mẫu */
 h2.section-title {
-    color: var(--text-main);
-    border-bottom: 2px solid #edf2f7;
-    padding-bottom: 1rem;
-    margin-top: 0;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+    color: var(--purple-dark);
 }
-
-#list-container { list-style: none; padding: 0; }
 
 #list-container li {
-    padding: 1.5rem 0;
-    border-bottom: 1px solid #edf2f7;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f0f0f0;
 }
 
-/* Style cho tiêu đề bài viết trong danh sách */
 #list-container a {
-    font-weight: bold;
-    font-size: 1.1rem;
+    font-weight: 600;
     color: #2d3748;
     text-decoration: none;
-    display: block;
-    margin-bottom: 0.5rem;
 }
 
-#list-container a:hover { color: var(--accent); }
+/* Bài viết hiện tại nằm nối liền bên dưới */
+.post-detail {
+    margin-top: 2rem;
+    border-top: 2px solid var(--bg-color);
+    padding-top: 2rem;
+}
 
-/* Footer tối giản */
+/* Footer nhỏ hơn 1/2 */
 footer {
     text-align: center;
-    padding: 2rem;
-    background: var(--header-bg);
-    color: #b794f4;
-    font-size: 0.85rem;
-    margin-top: 40px;
+    padding: 0.8rem; /* Giảm padding tối đa */
+    background: var(--purple-dark);
+    color: #a0aec0;
+    font-size: 0.75rem;
 }
