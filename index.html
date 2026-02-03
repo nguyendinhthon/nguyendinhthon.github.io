@@ -24,14 +24,13 @@
 </header>
 
 <main>
+    <main>
     <div id="content-wrapper">
-        <article id="post-content" class="hidden post-detail"></article>
-
-        <div id="post-list" class="hidden">
-            <h2 class="section-title">Các bài viết khác</h2>
-            <ul id="list-container"></ul>
-        </div>
+        <article id="post-content" class="card post-detail">
+            <div id="loading-text">Đang tải nội dung...</div>
+        </article>
     </div>
+</main>
 </main>
 
     <footer>
@@ -40,41 +39,23 @@
 
 <script>
     const urlParams = new URLSearchParams(window.location.search);
-    const postName = urlParams.get('post');
-    const postList = document.getElementById('post-list');
+    const postName = urlParams.get('post') || 'index'; // Mặc định load index.md nếu là trang chủ
     const postContent = document.getElementById('post-content');
-    const listContainer = document.getElementById('list-container');
 
-    // 1. Luôn load danh sách bài viết (hiện ở dưới)
-    postList.classList.remove('hidden');
-    fetch('./posts.json')
-        .then(res => res.json())
-        .then(posts => {
-            listContainer.innerHTML = posts.map(post => `
-                <li>
-                    <a href="?post=${post.slug}">${post.title}</a>
-                    <p style="color: #888; font-size: 0.85rem; margin: 0;">Xem chi tiết...</p>
-                </li>
-            `).join('');
+    fetch(`./content/${postName}.md`)
+        .then(res => {
+            if(!res.ok) throw new Error();
+            return res.text();
+        })
+        .then(md => {
+            postContent.innerHTML = marked.parse(md);
+        })
+        .catch(() => {
+            postContent.innerHTML = `
+                <h1>Chào mừng đến với Pixel Arco</h1>
+                <p>Vui lòng chọn một tài liệu hoặc bài viết để bắt đầu xem nội dung.</p>
+            `;
         });
-
-    // 2. Nếu người dùng đang xem một bài viết cụ thể
-    if (postName) {
-        postContent.classList.remove('hidden');
-        fetch(`./content/${postName}.md`)
-            .then(res => {
-                if(!res.ok) throw new Error();
-                return res.text();
-            })
-            .then(md => {
-                postContent.innerHTML = marked.parse(md);
-                // Cuộn lên đầu trang để đọc bài
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            })
-            .catch(() => {
-                postContent.innerHTML = "<h2>404</h2><p>Không tìm thấy bài viết này.</p>";
-            });
-    }
 </script>
 </body>
 </html>
