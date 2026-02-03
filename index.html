@@ -38,47 +38,37 @@
         <p>Pixel Arco</p>
     </footer>
 
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const postName = urlParams.get('post');
-        const postList = document.getElementById('post-list');
-        const postContent = document.getElementById('post-content');
-        const listContainer = document.getElementById('list-container');
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const postName = urlParams.get('post');
+    const postList = document.getElementById('post-list');
+    const postContent = document.getElementById('post-content');
+    const listContainer = document.getElementById('list-container');
 
-        if (postName) {
-            // HIỂN THỊ BÀI VIẾT CHI TIẾT
-            postContent.classList.remove('hidden');
-            fetch(`./content/${postName}.md`)
-                .then(res => {
-                    if(!res.ok) throw new Error();
-                    return res.text();
-                })
-                .then(md => {
-                    postContent.innerHTML = marked.parse(md);
-                })
-                .catch(() => {
-                    postContent.innerHTML = "<h2>404</h2><p>Không tìm thấy bài viết này.</p>";
-                });
-        } else {
-            // HIỂN THỊ TRANG CHỦ
-            postList.classList.remove('hidden');
-            fetch('./posts.json')
-                .then(res => res.json())
-                .then(posts => {
-                    if (posts.length === 0) {
-                        listContainer.innerHTML = "<li>Chưa có bài viết nào.</li>";
-                        return;
-                    }
-                    listContainer.innerHTML = posts.map(post => `
-                        <li>
-                            <a href="?post=${post.slug}">${post.title}</a>
-                        </li>
-                    `).join('');
-                })
-                .catch(() => {
-                    listContainer.innerHTML = "<li>Lỗi khi tải danh sách bài viết.</li>";
-                });
-        }
-    </script>
+    // Luôn luôn hiển thị danh sách bài viết ở trên
+    postList.classList.remove('hidden');
+    fetch('./posts.json')
+        .then(res => res.json())
+        .then(posts => {
+            listContainer.innerHTML = posts.map(post => `
+                <li>
+                    <a href="?post=${post.slug}">${post.title}</a>
+                </li>
+            `).join('');
+        });
+
+    // Nếu có bài viết cụ thể, hiển thị nó NGAY PHÍA DƯỚI
+    if (postName) {
+        postContent.classList.remove('hidden');
+        postContent.classList.add('post-detail'); // Thêm class để tạo khoảng cách nhẹ
+        fetch(`./content/${postName}.md`)
+            .then(res => res.text())
+            .then(md => {
+                postContent.innerHTML = marked.parse(md);
+                // Cuộn xuống bài viết để người dùng biết nội dung đã load
+                postContent.scrollIntoView({ behavior: 'smooth' });
+            });
+    }
+</script>
 </body>
 </html>
