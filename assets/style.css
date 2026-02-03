@@ -1,31 +1,25 @@
 :root {
     --purple-dark: #2d1b4d;
-    --purple-light: #b794f4;
-    --bg-color: #f0f2f5; /* Nền xám nhạt để làm nổi card trắng */
-    --card-bg: #ffffff;
-    --text-main: #1a202c;
+    --bg-color: #f0f2f5;
 }
 
 body {
     background-color: var(--bg-color);
     margin: 0;
-    font-family: 'Inter', -apple-system, sans-serif;
-    color: var(--text-main);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    font-family: 'Inter', sans-serif;
 }
 
-/* Header dày lại như cũ */
 header {
     background: var(--purple-dark);
+    padding: 1.2rem 0;
     color: white;
-    padding: 1.2rem 0; /* Tăng độ dày */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .header-container {
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -33,90 +27,23 @@ header {
     padding: 0 2rem;
 }
 
-.logo { display: flex; align-items: center; gap: 12px; font-size: 1.4rem; font-weight: 700; }
-.logo img { height: 35px; }
-
-nav a {
-    color: #e9d8fd;
-    text-decoration: none;
-    margin-left: 1.5rem;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: color 0.2s;
-}
-nav a:hover { color: white; }
-
-/* Giao diện chính giống hình ảnh mẫu */
-main {
-    max-width: 1100px;
+.card {
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border: 1px solid #e2e8f0;
     margin: 2rem auto;
-    padding: 0 1rem;
-    flex: 1;
-    width: 100%;
+    max-width: 1000px;
+    width: 95%;
     box-sizing: border-box;
 }
 
-/* Khối nội dung trắng (Card) */
-#content-wrapper {
-    background: var(--card-bg);
-    padding: 2.5rem;
-    border-radius: 8px; /* Bo góc nhẹ */
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    border: 1px solid #e2e8f0;
-}
-
-.section-title {
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid #edf2f7;
-    color: var(--text-main);
-}
-
-#list-container { list-style: none; padding: 0; }
-#list-container li {
-    padding: 1.5rem 0;
-    border-bottom: 1px solid #edf2f7;
-}
-#list-container li:last-child { border-bottom: none; }
-
-#list-container a {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #2d3748;
-    text-decoration: none;
-    display: block;
-    margin-bottom: 0.5rem;
-}
-#list-container a:hover { color: var(--purple-light); }
-
-/* Nội dung bài viết chi tiết */
-/* Đường kẻ phân cách khi bài viết nằm trên list */
-.post-detail {
-    margin-bottom: 3rem;
-    padding-bottom: 2rem;
-    border-bottom: 2px dashed #edf2f7;
-}
-
-/* Đảm bảo danh sách phía dưới không bị quá dính vào bài viết */
-#post-list {
-    margin-top: 1rem;
-}
-
-.section-title {
-    font-size: 1.2rem; /* Nhỏ hơn một chút vì giờ nó đóng vai trò "Tin liên quan" */
-    color: var(--purple-light);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Footer nhỏ gọn */
 footer {
     text-align: center;
     padding: 1rem;
     background: var(--purple-dark);
     color: #b794f4;
     font-size: 0.8rem;
+    margin-top: auto; /* Luôn nằm dưới cùng */
 }
