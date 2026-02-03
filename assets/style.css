@@ -1,94 +1,109 @@
 :root {
     --purple-dark: #2d1b4d;
     --purple-light: #b794f4;
-    --bg-color: #f4f5f7;
-    --text-color: #333;
+    --bg-color: #f0f2f5; /* Nền xám nhạt để làm nổi card trắng */
+    --card-bg: #ffffff;
+    --text-main: #1a202c;
 }
 
 body {
     background-color: var(--bg-color);
     margin: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--text-main);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-/* Header nhỏ hơn còn 2/3 (giảm padding) */
+/* Header dày lại như cũ */
 header {
     background: var(--purple-dark);
     color: white;
-    padding: 0.4rem 0; /* Thu nhỏ chiều cao */
+    padding: 1.2rem 0; /* Tăng độ dày */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .header-container {
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 1.5rem;
+    padding: 0 2rem;
 }
 
-.logo { display: flex; align-items: center; gap: 8px; font-weight: bold; }
-.logo img { height: 28px; } /* Logo nhỏ hơn */
+.logo { display: flex; align-items: center; gap: 12px; font-size: 1.4rem; font-weight: 700; }
+.logo img { height: 35px; }
 
 nav a {
     color: #e9d8fd;
     text-decoration: none;
-    margin-left: 1.2rem;
-    font-size: 0.85rem;
+    margin-left: 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s;
 }
+nav a:hover { color: white; }
 
-/* Main: Loại bỏ hiệu ứng nổi (shadow/border/card) */
+/* Giao diện chính giống hình ảnh mẫu */
 main {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 1.5rem;
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    flex: 1;
     width: 100%;
     box-sizing: border-box;
-    background: white; /* Giữ nền trắng nhưng không đổ bóng */
-    flex: 1;
 }
 
-/* Phần danh sách và nội dung nối liền nhau */
-#post-list, #post-content {
-    background: transparent;
-    padding: 0;
-    border: none;
-    box-shadow: none;
+/* Khối nội dung trắng (Card) */
+#content-wrapper {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 8px; /* Bo góc nhẹ */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
 }
 
-h2.section-title {
-    font-size: 1.2rem;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 0.5rem;
-    color: var(--purple-dark);
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #edf2f7;
+    color: var(--text-main);
 }
 
+#list-container { list-style: none; padding: 0; }
 #list-container li {
-    padding: 1rem 0;
-    border-bottom: 1px solid #f0f0f0;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #edf2f7;
 }
+#list-container li:last-child { border-bottom: none; }
 
 #list-container a {
-    font-weight: 600;
+    font-size: 1.2rem;
+    font-weight: 700;
     color: #2d3748;
     text-decoration: none;
+    display: block;
+    margin-bottom: 0.5rem;
 }
+#list-container a:hover { color: var(--purple-light); }
 
-/* Bài viết hiện tại nằm nối liền bên dưới */
+/* Nội dung bài viết chi tiết */
 .post-detail {
-    margin-top: 2rem;
-    border-top: 2px solid var(--bg-color);
-    padding-top: 2rem;
+    line-height: 1.8;
+    font-size: 1.05rem;
 }
+.post-detail h1, .post-detail h2 { color: var(--purple-dark); }
 
-/* Footer nhỏ hơn 1/2 */
+/* Footer nhỏ gọn */
 footer {
     text-align: center;
-    padding: 0.8rem; /* Giảm padding tối đa */
+    padding: 1rem;
     background: var(--purple-dark);
-    color: #a0aec0;
-    font-size: 0.75rem;
+    color: #b794f4;
+    font-size: 0.8rem;
 }
