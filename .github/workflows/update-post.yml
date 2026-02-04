@@ -3,6 +3,9 @@ on:
   push:
     paths:
       - 'content/*.md'
+      - 'content_contest/*.md'
+      - 'content_docs/*.md'
+      - 'content_problem/*.md'
 jobs:
   build:
     runs-on: ubuntu-latest
