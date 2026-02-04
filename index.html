@@ -9,53 +9,74 @@
 </head>
 <body>
 
-<header>
-    <div class="header-container">
-        <div class="logo">
-            <!------
-            <img src="your-logo-link.png" alt="Logo">
-            -------->
-            <span>Pixel Arco</span>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="https://via.placeholder.com/40" alt="Logo">
+            </div>
+            <nav>
+                <a href="index.html">Homepage</a>
+                <a href="https://github.com/your-username" target="_blank">Contact</a>
+            </nav>
         </div>
-        <nav>
-            <a href="index.html">Trang chủ</a>
-        </nav>
-    </div>
-</header>
+    </header>
 
-<main>
-    <main>
-    <div id="content-wrapper">
-        <article id="post-content" class="card post-detail">
-            <div id="loading-text">Đang tải nội dung...</div>
-        </article>
-    </div>
-</main>
-</main>
+    <main id="main-content">
+        <div id="post-list" class="hidden">
+            <h2 class="section-title">Bài viết mới nhất</h2>
+            <ul id="list-container">
+                <li class="loading">Đang tải danh sách bài viết...</li>
+            </ul>
+        </div>
+
+        <article id="post-content" class="hidden post-detail"></article>
+    </main>
 
     <footer>
         <p>Pixel Arco</p>
     </footer>
 
-<script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const postName = urlParams.get('post') || 'index'; // Mặc định load index.md nếu là trang chủ
-    const postContent = document.getElementById('post-content');
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const postName = urlParams.get('post');
+        const postList = document.getElementById('post-list');
+        const postContent = document.getElementById('post-content');
+        const listContainer = document.getElementById('list-container');
 
-    fetch(`./content/${postName}.md`)
-        .then(res => {
-            if(!res.ok) throw new Error();
-            return res.text();
-        })
-        .then(md => {
-            postContent.innerHTML = marked.parse(md);
-        })
-        .catch(() => {
-            postContent.innerHTML = `
-                <h1>Chào mừng đến với Pixel Arco</h1>
-                <p>Vui lòng chọn một tài liệu hoặc bài viết để bắt đầu xem nội dung.</p>
-            `;
-        });
-</script>
+        if (postName) {
+            // HIỂN THỊ BÀI VIẾT CHI TIẾT
+            postContent.classList.remove('hidden');
+            fetch(`./content/${postName}.md`)
+                .then(res => {
+                    if(!res.ok) throw new Error();
+                    return res.text();
+                })
+                .then(md => {
+                    postContent.innerHTML = marked.parse(md);
+                })
+                .catch(() => {
+                    postContent.innerHTML = "<h2>404</h2><p>Không tìm thấy bài viết này.</p>";
+                });
+        } else {
+            // HIỂN THỊ TRANG CHỦ
+            postList.classList.remove('hidden');
+            fetch('./posts.json')
+                .then(res => res.json())
+                .then(posts => {
+                    if (posts.length === 0) {
+                        listContainer.innerHTML = "<li>Chưa có bài viết nào.</li>";
+                        return;
+                    }
+                    listContainer.innerHTML = posts.map(post => `
+                        <li>
+                            <a href="?post=${post.slug}">${post.title}</a>
+                        </li>
+                    `).join('');
+                })
+                .catch(() => {
+                    listContainer.innerHTML = "<li>Lỗi khi tải danh sách bài viết.</li>";
+                });
+        }
+    </script>
 </body>
 </html>
