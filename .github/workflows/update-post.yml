@@ -30,7 +30,7 @@ jobs:
           sed -i '$ s/,$//' posts.json
           echo "]" >> posts.json
 
-- name: Commit and Push
+      - name: Commit and Push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
